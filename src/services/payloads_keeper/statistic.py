@@ -14,5 +14,5 @@ async def get_persent_of_duplicates() -> float:
 async def statistic_service() -> dict:
     persent_of_duplicates = await get_persent_of_duplicates()
     return {
-        "persent_of_duplicates": f"{round(persent_of_duplicates, 2)}%"
+        "persentOfDuplicates": f"{round(persent_of_duplicates, 2)}%"
     }

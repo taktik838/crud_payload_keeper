@@ -6,7 +6,7 @@ from threading import Thread
 import settings
 
 
-file_handler = logging.FileHandler(settings.PATH_TO_FILE)
+file_handler = logging.FileHandler(settings.PATH_TO_FILE) if settings.LOG_TO_FILE else None
 stdout_handler = logging.StreamHandler(sys.stdout)
 
 class ThreadLoggingManager:
@@ -29,7 +29,7 @@ class ThreadLoggingManager:
 
     def run_workers(self) -> None:
         for worker in self._workers:
-            worker.run()
+            worker.start()
 
     def add_record(self, record: logging.LogRecord) -> None:
         self._queue.put(record)
@@ -45,6 +45,6 @@ class MultiThreadingHandler(logging.Handler):
         self._thread_logging_manager.add_record(record)
 
 
-server_logger = logging.getLogger("server_logger")
-server_logger.setLevel(settings.LOGGING_LEVEL)
-server_logger.addHandler(MultiThreadingHandler())
+def setting_logger():
+    logging.root.addHandler(MultiThreadingHandler())
+    logging.root.setLevel(settings.LOGGING_LEVEL)

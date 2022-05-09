@@ -15,6 +15,9 @@ class LoggingLevel(str, Enum):
     DEBUG = "DEBUG"
     NOTSET = "NOTSET"
 
+    def __str__(self):
+        return self.value
+
 LOGGING_LEVEL: LoggingLevel = LoggingLevel(os.getenv("LOGGING_LEVEL", "DEBUG"))
 
 

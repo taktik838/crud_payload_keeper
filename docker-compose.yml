@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    restart: on-failure
+    volumes:
+      - .mongo_dump:/data/db
+    ports:
+      - 27017:27017
+  crud_server:
+    build:
+      context: .
+    restart: on-failure
+    ports:
+      - 8888:8888
+    environment:
+    - MONGO_CONNECTION_STRING=mongodb://mongo:27017
